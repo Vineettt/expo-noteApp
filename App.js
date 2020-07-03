@@ -1,19 +1,60 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NotesProvider } from "./src/context/NotesContext";
+import ListNoteScreen from "./src/screens/ListNotesScreen";
+import CreateNoteScreen from "./src/screens/CreateNotesScreen";
+import ShowNoteScreen from "./src/screens/ShowNoteScreen";
+import EditNoteScreen from "./src/screens/EditNoteScreen";
 
-export default function App() {
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="notes"
+          component={ListNoteScreen}
+          options={{
+            title: "All Notes",
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="create"
+          component={CreateNoteScreen}
+          options={{
+            title: "Create Note",
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="show"
+          component={ShowNoteScreen}
+          options={{
+            title: "Note",
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="edit"
+          component={EditNoteScreen}
+          options={{
+            title: "Update Note",
+            headerTitleAlign: "center",
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default () => {
+  return (
+    <NotesProvider>
+      <App />
+    </NotesProvider>
+  );
+};
